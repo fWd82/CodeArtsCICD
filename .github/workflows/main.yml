@@ -38,7 +38,7 @@ jobs:
         #sudo docker push swr.ap-southeast-3.myhuaweicloud.com/{Organization name}/{Image name}:{Tag}
 
         push: true
-        tags: swr.ap-southeast-3.myhuaweicloud.com/cloudbuildtest/webtest2:v1
+        tags: swr.ap-southeast-3.myhuaweicloud.com/cloudbuildtest/codeartscicd:v1
 
 
 
