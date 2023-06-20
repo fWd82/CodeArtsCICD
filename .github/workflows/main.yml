@@ -17,7 +17,7 @@ jobs:
     - name: Log in to HuaweiCloud SWR
       uses: huaweicloud/swr-login@v1
       with:
-        region: na-mexico-1
+        region: ap-southeast-3
         access-key-id: ${{ secrets.ACCESSKEY }}
         access-key-secret: ${{ secrets.SECRETACCESSKEY }}
 
@@ -33,5 +33,12 @@ jobs:
       with:
         #context: ./
         #file: ./Dockerfile
+
+        #tags: swr.na-mexico-1.myhuaweicloud.com/cicd-test/react-app:v2
+        #sudo docker push swr.ap-southeast-3.myhuaweicloud.com/{Organization name}/{Image name}:{Tag}
+
         push: true
-        tags: swr.na-mexico-1.myhuaweicloud.com/cicd-test/react-app:v2
+        tags: swr.ap-southeast-3.myhuaweicloud.com/cloudbuildtest/CodeArtsCICD:v2
+
+
+
