@@ -33,8 +33,8 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t swr.ap-southeast-3.myhuaweicloud.com/codeartscicd:latest .
+          docker build -t swr.ap-southeast-3.myhuaweicloud.com/cloudbuildtest/test5:latest .
 
       - name: Push Docker image to SWR 1
         run: |
-          docker push swr.ap-southeast-3.myhuaweicloud.com/codeartscicd/test5:latest
+          docker push swr.ap-southeast-3.myhuaweicloud.com/cloudbuildtest/test5:latest
