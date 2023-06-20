@@ -6,7 +6,7 @@ branding:
 description: Create Docker images and push into a SWR repository. It can create it and attach a policy to store a max amount
 inputs:
   access_key_id:
-    description: "The HUAWEI access key id"
+    description: The HUAWEI access key id
     required: true
   secret_access_key:
     description: The HUAWEI secret access key
@@ -25,8 +25,7 @@ inputs:
     description: Comma-separated string of SWR image tags
     default: "latest"
     required: false
-
-# build and push docker image
+    
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -39,4 +38,4 @@ jobs:
           #context: ./
           #file: ./Dockerfile
           push: true
-          tags:
+          tags: 
