@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -27,18 +27,14 @@ jobs:
         run: |
           # Add your build and test commands here
 
-      - name: Login to Huawei Cloud SWR
-        uses: huaweicloud/actions-login-swr@v1
-        with:
-          region: ap-southeast-3
-          access-key-id: ${{ secrets.ACCESSKEY }}
-          access-key-secret: ${{ secrets.SECRETACCESSKEY }}
-          repository: cloudbuildtest  # Change this to your SWR repository name
+      - name: Log in to Huawei Cloud SWR
+        run: |
+          echo ${{ secrets.ACCESSKEY }} | docker login -u ${{ secrets.SECRETACCESSKEY }} --password-stdin swr.ap-southeast-3.myhuaweicloud.com
 
-      - name: Push image to SWR
-        uses: huaweicloud/actions-push-image-to-swr@v1
-        with:
-          region: cn-north-1  # Change this to your desired region
-          repository: cloudbuildtest  # Change this to your SWR repository name
-          image-name: mytestimage  # Change this to your desired image name
-          image-tag: latest  # Change this to your desired image tag
+      - name: Build and tag Docker image
+        run: |
+          docker build -t swr.ap-southeast-3.myhuaweicloud.com/your/repository:latest .
+
+      - name: Push Docker image to SWR
+        run: |
+          docker push swr.ap-southeast-3.myhuaweicloud.com/your/repository:latest
