@@ -37,4 +37,4 @@ jobs:
 
       - name: Push Docker image to SWR
         run: |
-          docker push swr.ap-southeast-3.myhuaweicloud.com/codeartscicd:latest
+          docker push swr.ap-southeast-3.myhuaweicloud.com/codeartscicd/test4:latest
