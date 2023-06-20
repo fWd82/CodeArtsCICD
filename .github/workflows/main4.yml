@@ -29,7 +29,7 @@ jobs:
 
       - name: Log in to Huawei Cloud SWR
         run: |
-          echo ${{ secrets.SECRETACCESSKEY }} | docker login -u ${{ secrets.ACCESSKEY }} --password-stdin swr.ap-southeast-3.myhuaweicloud.com
+          echo ${{ secrets.ACCESSKEY }} | docker login -u ${{ secrets.SECRETACCESSKEY }} --password-stdin swr.ap-southeast-3.myhuaweicloud.com
 
       - name: Build and tag Docker image
         run: |
