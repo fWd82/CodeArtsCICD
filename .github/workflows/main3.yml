@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger the pipeline
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x  # Change this to your desired Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Adjust this command based on your requirements
+
+      - name: Build and test
+        run: |
+          # Add your build and test commands here
+
+      - name: Login to Huawei Cloud SWR
+        uses: huaweicloud/actions-login-swr@v1
+        with:
+          region: ap-southeast-3
+          access-key-id: ${{ secrets.ACCESSKEY }}
+          access-key-secret: ${{ secrets.SECRETACCESSKEY }}
+          repository: cloudbuildtest  # Change this to your SWR repository name
+
+      - name: Push image to SWR
+        uses: huaweicloud/actions-push-image-to-swr@v1
+        with:
+          region: cn-north-1  # Change this to your desired region
+          repository: cloudbuildtest  # Change this to your SWR repository name
+          image-name: mytestimage  # Change this to your desired image name
+          image-tag: latest  # Change this to your desired image tag
