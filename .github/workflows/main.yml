@@ -1,44 +1,44 @@
-name: "main1"
+name: main3
 
 on:
   push:
-    branches: 
-    - 'main'
+    branches:
+      - main  # Change this to the branch you want to trigger the pipeline
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Comprobando la version de docker
-    - name: check docker version
-      run: docker -v
-      
-    # docker login, login en SWR
-    - name: Log in to HuaweiCloud SWR
-      uses: huaweicloud/swr-login@v1
-      with:
-        region: ap-southeast-3
-        access-key-id: ${{ secrets.ACCESSKEY }}
-        access-key-secret: ${{ secrets.SECRETACCESSKEY }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    # Configurar el entorno de docker
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-      
-    # build and push docker image
-    - name: Build and push
-      id: docker_build
-      uses: docker/build-push-action@v4
-      with:
-        #context: ./
-        #file: ./Dockerfile
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x  # Change this to your desired Python version
 
-        #tags: swr.na-mexico-1.myhuaweicloud.com/cicd-test/react-app:v2
-        #sudo docker push swr.ap-southeast-3.myhuaweicloud.com/{Organization name}/{Image name}:{Tag}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip -v  # Adjust this command based on your requirements
 
-        push: true
-        tags: swr.ap-southeast-3.myhuaweicloud.com/cloudbuildtest/codeartscicd:v1
+      - name: Build and test
+        run: |
+          # Add your build and test commands here
 
+      # docker login, login en SWR
+      - name: Log in to HuaweiCloud SWR
+        uses: huaweicloud/swr-login@v1
+        with:
+          region: ap-southeast-3
+          access-key-id: ${{ secrets.ACCESSKEY }}
+          access-key-secret: ${{ secrets.SECRETACCESSKEY }}
 
+      - name: Build and tag Docker image
+        run: |
+          docker build -t swr.ap-southeast-3.myhuaweicloud.com/cloudbuildtest/myimage:latest .
 
+      - name: Push Docker image to SWR try
+        run: |
+          docker push swr.ap-southeast-3.myhuaweicloud.com/cloudbuildtest/myimage:latest 
